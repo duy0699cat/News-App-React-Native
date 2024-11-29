@@ -37,7 +37,7 @@ export default function CustomDrawerContent(props) {
                 fontSize: 20,
                 fontWeight: 'bold',
                 alignItems: 'center',
-            }}>The NewsXTimes</Text>
+            }}>NewsXTimes</Text>
             </View>
             
             <DrawerItem
@@ -71,7 +71,7 @@ export default function CustomDrawerContent(props) {
                 borderTopRightRadius: 30,
                 borderBottomRightRadius: 30,
             }}>
-                <Ionicons name='ios-moon-sharp' size={25} color={theme.iconColor} />
+                <Ionicons name='moon' size={25} color={theme.iconColor} />
                 <Text style={{ 
                     fontSize: 18, 
                     fontWeight: 'bold', 

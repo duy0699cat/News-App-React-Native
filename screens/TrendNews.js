@@ -1,42 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, FlatList, ScrollView, ActivityIndicator} from 'react-native';
+import { StyleSheet, FlatList, View, ActivityIndicator} from 'react-native';
 
 import TopNewsCard from '../components/TopNewsCard';
-import newAPI from '../apis/News';
+import { getNewsFromAPI } from '../apis/News';
 
 const TrendNews = ({ navigation }) => {
 
     const [isLoading, setLoading] = useState(true);
     const [newstech, setNewsTech] = useState([])
 
-    useEffect(()=> {
-        getNewsFromAPI()
-    }, [])
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        console.log("Fetching trending news");
+        const response = await getNewsFromAPI("country=us");
+        setNewsTech(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    /* const newsResponse = async() => {
-        const response = await newAPI.get('everything?q=tesla&from=2021-07-19&sortBy=publishedAt&apiKey=920deb9f754348c0bec4871fef36d971')
-        console.log(response.data)
-    } */
+    fetchNews();
+  }, []);
 
-    function getNewsFromAPI() {
-        newAPI.get('top-headlines?country=in&category=general&apiKey=920deb9f754348c0bec4871fef36d971')
-        .then(async function(response){
-            setNewsTech(response.data)
-        })
-        .catch(function(error){
-            console.log(error);
-        })
-        .finally(function(){
-            setLoading(false);
-        })
-    }
-
-    if(!newstech) {
-        return null
-    }
+  if (!newstech) {
+    return null;
+  }
     
     return (
-        <ScrollView>
+        <View>
             {isLoading ? <ActivityIndicator visible={true} /> : (
             <FlatList
                 horizontal={true}
@@ -50,7 +44,7 @@ const TrendNews = ({ navigation }) => {
                 )}
             />
             )}
-        </ScrollView>
+        </View>
     )
 }
 

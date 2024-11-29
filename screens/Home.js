@@ -81,86 +81,101 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={{ backgroundColor: theme.backColor }}>
-      <StatusBar
-        backgroundColor={theme.statusColor}
-      />
-      <View style={{
-        backgroundColor: theme.headerColor,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        elevation: 8,
-        
+      <StatusBar backgroundColor={theme.statusColor} />
+      <View
+        style={{
+          backgroundColor: theme.headerColor,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          elevation: 8,
         }}
       >
         <Image
-          source={require('../assets/img/header-logo.png')}
-          style={{ width: 65, height: 65, alignSelf: 'flex-start', paddingLeft: 10, marginLeft: 10 }}
+          source={require("../assets/img/header-logo.png")}
+          style={{
+            width: 65,
+            height: 65,
+            alignSelf: "flex-start",
+            paddingLeft: 10,
+            marginLeft: 10,
+          }}
         />
-        <Text style={styles.mainText}>The NewsX Times</Text>
+        <Text style={styles.mainText}>News X Times</Text>
       </View>
-      <ScrollView>
-        <View>
-          <TouchableOpacity style={{
-            backgroundColor: theme.cardBackground,
-            borderRadius: 25,
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 140,
-            padding: 10,
-            marginTop: 20,
-            marginLeft: 20,
-            elevation: 3
-          }}>
-            <Text style={{
-              color: theme.textColor,
-              fontSize: 17,
-              fontWeight: 'bold'
-            }}
+      {/* Replaced ScrollView with FlatList */}
+      <FlatList
+        ListHeaderComponent={
+          <View>
+            <TouchableOpacity
+              onPress={() => navigation.openDrawer()}
+              style={{
+                backgroundColor: theme.cardBackground,
+                borderRadius: 25,
+                justifyContent: "center",
+                alignItems: "center",
+                width: 140,
+                padding: 10,
+                marginTop: 20,
+                marginLeft: 20,
+                elevation: 3,
+              }}
             >
-              📅 {months()} {date}
-            </Text>
-          </TouchableOpacity>
-          <Text style={{
-            fontSize: 30,
-            fontWeight: 'bold',
-            marginTop: 10,
-            marginLeft: 20,
-            color: theme.textColor
-          }}
-          >Trending News</Text>
-          {isLoading ? <ActivityIndicator size="large" color="#DA3349" /> : (
-            <TrendNews />
-          )}
+              <Text
+                style={{
+                  color: theme.textColor,
+                  fontSize: 17,
+                  fontWeight: "bold",
+                }}
+              >
+                📅 {months()} {date}
+              </Text>
+            </TouchableOpacity>
 
-          <View
-            style={{
-              borderBottomColor: 'gray',
-              borderBottomWidth: 0.5,
-              width: '90%',
-              alignSelf: 'center',
-              marginTop: 5
-            }}
-          />
-          <Text style={{
-            fontSize: 30,
-            fontWeight: 'bold',
-            marginTop: 10,
-            marginLeft: 20,
-            color: theme.textColor
-          }}
-          >Recent News</Text>
-          <FlatList
-            data={news.articles}
-            keyExtractor={(item, index) => 'key' + index}
-            renderItem={({ item }) => (
-              <Card
-                item={item}
-              />
+            <Text
+              style={{
+                fontSize: 30,
+                fontWeight: "bold",
+                marginTop: 10,
+                marginLeft: 20,
+                color: theme.textColor,
+              }}
+            >
+              Trending News
+            </Text>
+            {isLoading ? (
+              <ActivityIndicator size="large" color="#DA3349" />
+            ) : (
+              <TrendNews />
             )}
-            style={{ marginBottom: 65 }}
-          />
-        </View>
-      </ScrollView>
+
+            <View
+              style={{
+                borderBottomColor: "gray",
+                borderBottomWidth: 0.5,
+                width: "90%",
+                alignSelf: "center",
+                marginTop: 5,
+              }}
+            />
+            <Text
+              style={{
+                fontSize: 30,
+                fontWeight: "bold",
+                marginTop: 10,
+                marginLeft: 20,
+                color: theme.textColor,
+              }}
+            >
+              Recent News
+            </Text>
+          </View>
+        }
+        data={news.articles}
+        keyExtractor={(item, index) => "key" + index}
+        renderItem={({ item }) => <Card item={item} />}
+        nestedScrollEnabled={true}
+        style={{ marginBottom: 65 }}
+      />
     </View>
   );
 };
