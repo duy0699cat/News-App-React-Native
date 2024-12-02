@@ -48,11 +48,11 @@ const DrawerNavigator = () => {
         theme={isEnabled === true ? DarkTheme : DefaultTheme}
       >
         <Drawer.Navigator
-          initialRouteName="Home"
+          initialRouteName="HomeDrawer"
           drawerContent={(props) => <DrawerContent {...props} />}
         >
           <Drawer.Screen
-            name="Home"
+            name="HomeDrawer"
             component={TabNavigator}
             options={{
               headerShown: false,
